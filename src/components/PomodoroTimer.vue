@@ -8,9 +8,24 @@
       </div>
 
       <div class="actions">
-        <button @click="startTimer">▶️ Start</button>
-        <button @click="pauseTimer">⏸ Pause</button>
-        <button @click="resetTimer">🔄 Reset</button>
+        <button class="btn-start" @click="startTimer">
+          <i class="pi pi-play"></i>
+          <span>
+            Start
+          </span>
+        </button>
+        <button class="btn-pause" @click="pauseTimer">
+          <i class="pi pi-pause"></i>
+          <span>
+            Pause
+          </span>
+        </button>
+        <button class="btn-reset" @click="resetTimer">
+          <i class="pi pi-replay"></i>
+          <span>
+            Reset
+          </span>
+        </button>
       </div>
 
       <TimerModal v-if="showModal" :isFocus="isFocus" @close="closeModal" />
@@ -22,13 +37,15 @@
 import { ref, computed, onUnmounted } from 'vue'
 import TimerModal from './TimerModal.vue'
 
-const FOCUS_TIME = 25 * 60
-const BREAK_TIME = 5 * 60
+const FOCUS_TIME = 0.1 * 60
+const BREAK_TIME = 0.1 * 60
 
 const isFocus = ref(true)
 const timeLeft = ref<number>(FOCUS_TIME)
 const showModal = ref(false)
 const timer = ref<number | null>(null)
+const alarmSound = new Audio('/alarm.mp3')
+
 
 const formattedTime = computed(() => {
   const m = String(Math.floor(timeLeft.value / 60)).padStart(2, '0')
@@ -39,10 +56,13 @@ const formattedTime = computed(() => {
 function startTimer() {
   if (timer.value) return
 
+  // if (isFocus.value) focusMusic.play();
+
   timer.value = window.setInterval(() => {
     if (timeLeft.value > 0) {
       timeLeft.value--
     } else {
+      alarmSound.play()
       stopTimer()
       showModal.value = true
     }
@@ -107,7 +127,7 @@ onUnmounted(stopTimer)
     .actions {
       display: flex;
       justify-content: center;
-      gap: 1rem;
+      gap: 1.5rem;
 
       button {
         background: #222;

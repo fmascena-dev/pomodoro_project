@@ -3,7 +3,12 @@
     <div class="modal-content">
       <h2>⏰ Tempo acabou!</h2>
       <p>{{ isFocus ? "Descansa aí agora, mané! 😴" : "Bora trabalhar, preguiçoso! 💪" }}</p>
-      <button @click="$emit('close')">Fechar</button>
+      <button @click="$emit('close')">
+        <i class="pi pi-times"></i>
+        <span>
+          Fechar
+        </span>
+      </button>
     </div>
   </div>
 </template>
@@ -14,6 +19,18 @@ defineEmits(["close"]);
 </script>
 
 <style lang="scss" scoped>
+@keyframes zoomPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 .modal {
   position: fixed;
   inset: 0;
@@ -21,11 +38,15 @@ defineEmits(["close"]);
   display: flex;
   justify-content: center;
   align-items: center;
+  animation: zoomPulse 1s infinite ease-in-out;
 
   .modal-content {
     background: #fff;
     padding: 2rem;
     border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
 
     h2 {
@@ -49,6 +70,11 @@ defineEmits(["close"]);
       border: none;
       cursor: pointer;
       font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.2rem;
+
       &:hover {
         filter: brightness(0.8);
       }

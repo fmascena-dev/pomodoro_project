@@ -20,6 +20,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-vue-next": "^0.556.0",
+    "primeicons": "^7.0.0",
     "reka-ui": "^2.6.1",
     "sass": "^1.94.2",
     "tailwind-merge": "^3.4.0",
