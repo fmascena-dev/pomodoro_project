@@ -37,8 +37,8 @@
 import { ref, computed, onUnmounted } from 'vue'
 import TimerModal from './TimerModal.vue'
 
-const FOCUS_TIME = 0.1 * 60
-const BREAK_TIME = 0.1 * 60
+const FOCUS_TIME = 25 * 60
+const BREAK_TIME = 5 * 60
 
 const isFocus = ref(true)
 const timeLeft = ref<number>(FOCUS_TIME)
