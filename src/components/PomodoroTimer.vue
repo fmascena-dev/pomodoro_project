@@ -45,7 +45,9 @@ const timeLeft = ref<number>(FOCUS_TIME)
 const showModal = ref(false)
 const timer = ref<number | null>(null)
 const alarmSound = new Audio('/alarm.mp3')
-
+const focusMusic = new Audio('/lofi-focus.mp3')
+focusMusic.loop = true
+focusMusic.volume = 0.25
 
 const formattedTime = computed(() => {
   const m = String(Math.floor(timeLeft.value / 60)).padStart(2, '0')
@@ -56,7 +58,7 @@ const formattedTime = computed(() => {
 function startTimer() {
   if (timer.value) return
 
-  // if (isFocus.value) focusMusic.play();
+  if (isFocus.value) focusMusic.play();
 
   timer.value = window.setInterval(() => {
     if (timeLeft.value > 0) {
@@ -65,6 +67,8 @@ function startTimer() {
       alarmSound.play()
       stopTimer()
       showModal.value = true
+      focusMusic.pause()
+      focusMusic.currentTime = 0
     }
   }, 1000)
 }
@@ -78,10 +82,13 @@ function stopTimer() {
 
 function pauseTimer() {
   stopTimer()
+  focusMusic.pause()
 }
 
 function resetTimer() {
   stopTimer()
+  focusMusic.pause()
+  focusMusic.currentTime = 0
   timeLeft.value = isFocus.value ? FOCUS_TIME : BREAK_TIME
 }
 
@@ -89,6 +96,13 @@ function closeModal() {
   showModal.value = false
   isFocus.value = !isFocus.value
   resetTimer()
+  alarmSound.pause()
+  alarmSound.currentTime = 0
+
+  if (isFocus.value) {
+    focusMusic.pause()
+    focusMusic.currentTime = 0
+  }
 }
 
 onUnmounted(stopTimer)
