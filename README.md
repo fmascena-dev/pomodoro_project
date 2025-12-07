@@ -1,48 +1,144 @@
-# .
+# 📘 Documentação – Pomodoro Timer (Vue + TS + SCSS)
 
-This template should help get you started developing with Vue 3 in Vite.
+## 📌 Descrição do Projeto
 
-## Recommended IDE Setup
+Um aplicativo Pomodoro feito com **Vue 3, TypeScript e SCSS**.
+O usuário alterna entre períodos de foco e descanso.
+Quando o tempo acaba, aparece um modal vermelho com animação de zoom + um som de alarme.
+Durante o tempo de foco, uma música de concentração toca em loop até o ciclo terminar.
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+Ideal para estudar, trabalhar e manter o foco sem desculpas. 😎
 
-## Recommended Browser Setup
+## 🚀 Funcionalidades
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd) 
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+| Funcionalidade | Status |
+|----------------|--------|
+| Cronômetro com contagem regressiva | ✅ |
+| Alternância automática foco ↔️ descanso | ✅ |
+| Modal de aviso quando tempo termina | ✅ |
+| Animação de zoom no modal | ✅ |
+| Som de alarme ao finalizar ciclo | ✅ |
+| Música de foco durante o período de foco | ✅ |
+| Pausar/Resetar timer mantendo lógica de áudio | ✅ |
 
-## Type Support for `.vue` Imports in TS
+## 🏗️ Tecnologias Utilizadas
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+- Vue 3
+- TypeScript
+- SCSS
+- Composition API
+- HTML Audio API
 
-## Customize configuration
+## 📁 Estrutura de Pastas
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+```css
+src/
+ ├── components/
+ │   ├── PomodoroTimer.vue
+ │   └── TimerModal.vue
+ ├── App.vue
+ ├── main.ts
+ └── globals.scss
+public/
+ ├── alarm.mp3
+ └── lofi-focus.mp3
+```
 
-## Project Setup
+## ⚙️ Instalação e Execução
 
-```sh
+- Clonar o repositório
+
+```bash
+git clone https://github.com/seu-usuario/pomodoro-vue-ts.git
+cd pomodoro-vue-ts
+```
+
+- Instalar dependências
+
+```bash
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+- Executar em modo desenvolvimento
 
-```sh
+```bash
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
+## 🎮 Como usar
 
-```sh
-npm run build
+- Clique em Start para iniciar o ciclo
+- Pause pausa a contagem e a música
+- Reset inicia novamente o tempo atual
+- Ao terminar o tempo → modal aparece + alarme toca
+- Após fechar modal → muda automaticamente para o próximo modo (foco → descanso ou descanso → foco)
+
+## ⏱️ Lógica do Pomodoro
+
+| Modo | Tempo padrão |
+|------|--------------|
+| Foco | 25:00 |
+| Descanso curto | 05:00 |
+
+> Quando o modo foco termina, toca o alarme e para a música.<br/>
+> Quando inicia novo ciclo de foco → música começa novamente.
+
+## 🔊 Gerenciamento de Áudio
+
+| Situação | Música foco | Alarme |
+|----------|-------------|--------|
+| Inicia foco | ▶️ | ❌ |
+| Pausa timer | ⏸️ | ❌ |
+| Reseta timer | ⏹️ | ❌ |
+| Ciclo foco termina | ⏹️ | ▶️ |
+| Modo descanso | ❌ | ❌ |
+
+## 🎨 Animação do Modal
+
+- Animação de zoom pulsante
+- Fundo vermelho com opacidade
+- Conteúdo centralizado e chamativo
+
+**Keyframe utilizado:**
+
+```css
+@keyframes zoomPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+## 🧠 Regras do Timer
 
-```sh
-npm run lint
-```
+- Não cria múltiplos intervalos ao clicar Start várias vezes
+- Timer sempre é limpo antes de reiniciar
+- Timer reseta automaticamente após fim do ciclo
+- Alternança automática entre modos
+
+## 🔒 Boas práticas aplicadas
+
+- ✅ Uso de ref<number | null> para evitar any
+- ✅ Limpeza do intervalo com onUnmounted
+- ✅ Separação de componentes (SOLID feelings 😌)
+- ✅ SCSS scoped para evitar treta global
+- ✅ Áudio controlado pelo estado do timer
+
+## 🔧 Possíveis Próximas Melhorias
+
+- Configurar tempos via UI
+- Volume e botão mute para música e alarme
+- Gráfico/contador de ciclos concluídos
+- Animações de transição do timer
+- Notificações desktop quando tempo termina
+- Opções de música via lista
+- Timer longo após X ciclos
+
+## 👨‍💻 Desenvolvedor
+
+Projeto desenvolvido por [Felipe Mascena](https://www.linkedin.com/in/felipe-mascena/) para estudo de **Vue 3** com **TypeScript**
+e para ajudar você a manter o foco sem surtar 😅
+
+## 📄 Licença
+
+> MIT — pode usar, modificar e distribuir à vontade 🎉
