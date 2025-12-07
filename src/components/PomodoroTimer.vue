@@ -44,10 +44,14 @@ const isFocus = ref(true)
 const timeLeft = ref<number>(FOCUS_TIME)
 const showModal = ref(false)
 const timer = ref<number | null>(null)
+
 const alarmSound = new Audio('/alarm.mp3')
+alarmSound.loop = true
+alarmSound.volume = 0.5
+
 const focusMusic = new Audio('/lofi-focus.mp3')
 focusMusic.loop = true
-focusMusic.volume = 0.25
+focusMusic.volume = 0.5
 
 const formattedTime = computed(() => {
   const m = String(Math.floor(timeLeft.value / 60)).padStart(2, '0')
